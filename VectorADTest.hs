@@ -5,7 +5,7 @@ import qualified Prelude
 import Data.HList
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.NonSI (gee)
-import Vector
+import Numeric.Units.Dimensional.LinearAlgebra.Vector
 import VectorAD
 import PosVel
 import Test.QuickCheck

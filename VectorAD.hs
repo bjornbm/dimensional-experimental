@@ -3,13 +3,12 @@
 module VectorAD where
 
 import qualified Prelude
+import Data.HList (HMap)
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional (Dimensional (Dimensional))
+import Numeric.Units.Dimensional.LinearAlgebra.Vector (Vec (ListVec), MulD, DivD, Homo, elemAdd, scaleVec)
 import Numeric.Units.Dimensional.LinearAlgebra.HListExtras (HZipWith)
-import Data.HList (HMap)
-import Numeric.Units.Dimensional (Dimensional (Dimensional), Quantity, Div, DOne)
-import Vector (Vec (ListVec), MulD, DivD, Homo, elemAdd, scaleVec)
-import Numeric.AD (AD, diffF, diffF', Mode)
+import Numeric.AD (AD, diffF', Mode)
 import qualified Numeric.AD (lift)
 import AD
 

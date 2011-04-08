@@ -1,5 +1,5 @@
 import Numeric.Units.Dimensional.Prelude
-import Vector
+import Numeric.Units.Dimensional.LinearAlgebra.Vector
 import PosVel
 import qualified Prelude
 
