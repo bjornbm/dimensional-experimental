@@ -6,8 +6,7 @@ module KalmanExample where
 import qualified Prelude
 import Data.HList
 import Numeric.Units.Dimensional.Prelude
-import Numeric.Units.Dimensional.LinearAlgebra.Vector
-import Numeric.Units.Dimensional.LinearAlgebra.Matrix hiding (x,y,z)
+import Numeric.Units.Dimensional.LinearAlgebra
 
 -- Types.
 type State = Vec (HCons DLength (HCons DVelocity HNil))
