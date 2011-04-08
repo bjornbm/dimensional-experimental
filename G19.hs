@@ -1,5 +1,6 @@
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.LinearAlgebra
+import Rotation
 import qualified Prelude
 
 
@@ -54,20 +55,20 @@ rot3 = rotZ (    0.081 *~degree)
 att1 = atti `matMat` rot1
 att2 = att1 `matMat` rot2
 att3 = att2 `matMat` rot3
-z3 = att3 `matVec` z
+z3 = att3 `matVec` unit_z
 
 -- Slew with ES bias.
 attiR = atti  `matMat` rotR
 att1R = attiR `matMat` rot1
 att2R = att1R `matMat` rot2
 att3R = att2R `matMat` rot3
-z3r = att3R `matVec` z
+z3r = att3R `matVec` unit_z
 
 -- Diff between the two.
 err = acos (z3 `dotProduct` z3r)
 
-dec v = 90*~degree - acos (v `dotProduct` z)
-ra  v = acos (v `dotProduct` x) -- only for very small declinations
+dec v = 90*~degree - acos (v `dotProduct` unit_z)
+ra  v = acos (v `dotProduct` unit_x) -- only for very small declinations
 -- 0.9996655998D+00    0.2566988705D-01   -0.3121784926D-02
 z_ideal = vCons ((0.9996655998e+00)*~one) $ vCons ((0.2566988705e-01)*~one) $ vSing ((-0.3121784926e-02)*~one)
 
@@ -76,12 +77,12 @@ z_ideal = vCons ((0.9996655998e+00)*~one) $ vCons ((0.2566988705e-01)*~one) $ vS
 --8<------- From G19_AMF3.hs ---------8<------------------
 
 -- minus x
-negX = rotZ (180*~degree) `matVec` x
+negX = rotZ (180*~degree) `matVec` unit_x
 
-sunECI = rotY sunDec `matMat` rotZ sunRA `matVec` x where
+sunECI = rotY sunDec `matMat` rotZ sunRA `matVec` unit_x where
   sunRA  = 184.965  *~ degree
   sunDec = (-2.149) *~ degree
-sunECI' = rotZ sunRA `matMat` rotY sunDec `matVec` x where
+sunECI' = rotZ sunRA `matMat` rotY sunDec `matVec` unit_x where
   sunRA  = 184.965  *~ degree
   sunDec = (-2.149) *~ degree
 
