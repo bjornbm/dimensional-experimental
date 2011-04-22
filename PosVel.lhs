@@ -2,7 +2,6 @@
 The convention in this module is that a @C@ denotes cartesian coordinates and an @S@ denotes spherical coordinates.
 
 > {-# OPTIONS_GHC -fglasgow-exts #-}
-> {-# LANGUAGE NoMonomorphismRestriction #-}
 
 > module PosVel where
 
