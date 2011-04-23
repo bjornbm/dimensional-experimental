@@ -2,6 +2,7 @@
 The convention in this module is that a @C@ denotes cartesian coordinates and an @S@ denotes spherical coordinates.
 
 > {-# OPTIONS_GHC -fglasgow-exts #-}
+> {-# LANGUAGE Haskell98 #-}
 
 > module PosVel where
 
@@ -55,14 +56,20 @@ Spherical position.
 
 > zenith :: SPos a -> Zenith a
 > zenith = vElemAt pos1
+> colatitude  :: SPos a -> Zenith a
 > colatitude  = zenith
+> polarAngle  :: SPos a -> Zenith a
 > polarAngle  = zenith
+> latitude    :: Floating a => SPos a -> Angle a
 > latitude s  = pi / _2 - colatitude s
+> declination :: Floating a => SPos a -> Angle a
 > declination = latitude
 
 > rightAscension :: SPos a -> RightAscension a
 > rightAscension = vElemAt pos2
+> longitude      :: SPos a -> RightAscension a
 > longitude      = rightAscension
+> hourAngle      :: SPos a -> RightAscension a
 > hourAngle      = rightAscension
 
 
