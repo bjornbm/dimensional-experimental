@@ -4,14 +4,13 @@ The convention in this module is that a @C@ denotes cartesian coordinates and an
 > {-# OPTIONS_GHC -fglasgow-exts #-}
 > {-# LANGUAGE Haskell98 #-}
 
-> module PosVel where
+> module Numeric.Units.Dimensional.LinearAlgebra.PosVel where
 
 > import qualified Prelude
 > import Numeric.Units.Dimensional.Prelude
 > import Numeric.Units.Dimensional (Dimensional (Dimensional))
 > import Numeric.Units.Dimensional.LinearAlgebra
-> import Data.HList
-> import VectorAD (applyLinear)
+> import Numeric.Units.Dimensional.LinearAlgebra.VectorAD (applyLinear)
 
 
 Type synonyms for clearer documentation.

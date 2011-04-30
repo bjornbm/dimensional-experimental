@@ -3,7 +3,7 @@
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE Rank2Types #-}
 
-module AD (diff, Lift (lift)) where
+module Numeric.Units.Dimensional.AD (diff, Lift (lift)) where
 
 import Numeric.Units.Dimensional (Dimensional (Dimensional), Quantity, Div)
 import Numeric.AD (AD, Mode)

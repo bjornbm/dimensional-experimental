@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -fglasgow-exts #-}
 
-module VectorAD where
+module Numeric.Units.Dimensional.LinearAlgebra.VectorAD where
 
 import qualified Prelude
 import Data.HList (HMap)
@@ -10,7 +10,7 @@ import Numeric.Units.Dimensional.LinearAlgebra.Vector (Vec (ListVec), MulD, DivD
 import Numeric.Units.Dimensional.LinearAlgebra.HListExtras (HZipWith)
 import Numeric.AD (AD, diffF', Mode)
 import qualified Numeric.AD (lift)
-import AD
+import Numeric.Units.Dimensional.AD
 
 
 -- | If @f@ is a function of a quantity that returns a 'Vector', then

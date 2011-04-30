@@ -1,8 +1,7 @@
 {-# LANGUAGE TypeOperators #-}
 
-module Rotation where
+module Numeric.Units.Dimensional.LinearAlgebra.Rotation where
 
-import Data.HList ((:*:))
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.LinearAlgebra
 import qualified Prelude

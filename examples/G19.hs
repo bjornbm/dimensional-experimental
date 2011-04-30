@@ -1,6 +1,6 @@
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.LinearAlgebra
-import Rotation
+import Numeric.Units.Dimensional.LinearAlgebra.Rotation
 import qualified Prelude
 
 

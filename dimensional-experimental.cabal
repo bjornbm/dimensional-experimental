@@ -1,5 +1,5 @@
 Name:                dimensional-experimental
-Version:             0.1
+Version:             0.3
 License:             BSD3
 License-File:        LICENSE
 Copyright:           Bjorn Buckwalter 2008-2011
@@ -32,10 +32,12 @@ Build-Depends:
 
 Exposed-Modules:
 
-    AD,
-    VectorAD,
-    PosVel,
-    Rotation
+    Numeric.Units.Dimensional.AD
+    Numeric.Units.Dimensional.Constants
+    Numeric.Units.Dimensional.Formulae
+    Numeric.Units.Dimensional.LinearAlgebra.VectorAD
+    Numeric.Units.Dimensional.LinearAlgebra.Rotation
+    Numeric.Units.Dimensional.LinearAlgebra.PosVel
 
 Extra-source-files:  README, LICENSE
 
