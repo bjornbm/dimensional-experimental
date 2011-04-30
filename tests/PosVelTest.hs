@@ -1,7 +1,7 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
 import qualified Prelude
-import PosVel
+import Numeric.Units.Dimensional.LinearAlgebra.PosVel
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.LinearAlgebra
 import Test.QuickCheck

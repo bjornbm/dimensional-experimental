@@ -6,8 +6,8 @@ import Data.HList
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.NonSI (gee)
 import Numeric.Units.Dimensional.LinearAlgebra.Vector
-import VectorAD
-import PosVel
+import Numeric.Units.Dimensional.LinearAlgebra.VectorAD
+import Numeric.Units.Dimensional.LinearAlgebra.PosVel
 import Test.QuickCheck
 
 myFun :: Fractional a => Time a -> Vec (DLength :*: DOne :*: DOne :*: HNil) a

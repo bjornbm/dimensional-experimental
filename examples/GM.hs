@@ -1,6 +1,6 @@
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.LinearAlgebra.Vector
-import PosVel
+import Numeric.Units.Dimensional.LinearAlgebra.PosVel
 import qualified Prelude
 
 
