@@ -1,4 +1,5 @@
 {-# LANGUAGE NoMonomorphismRestriction#-}
+{-# OPTIONS_GHC -fcontext-stack=35 #-}
 
 
 module KalmanExample where
