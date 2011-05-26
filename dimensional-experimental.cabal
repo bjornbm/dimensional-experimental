@@ -28,11 +28,13 @@ Build-Depends:
     numtype < 1.1,
     HList >= 0.2.1 && < 0.3,
     numeric-quest < 0.2,
-    ad >= 0.44.4 && < 1.1
+    ad >= 0.44.4 && < 1.1,
+    ieee754 >= 0.7.3 && < 1.1
 
 Exposed-Modules:
 
     Numeric.Units.Dimensional.AD
+    Numeric.Units.Dimensional.AEq
     Numeric.Units.Dimensional.Constants
     Numeric.Units.Dimensional.Formulae
     Numeric.Units.Dimensional.LinearAlgebra.VectorAD
