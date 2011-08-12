@@ -9,7 +9,7 @@ import Numeric.Units.Dimensional (Dimensional (Dimensional), Quantity, Div)
 import Numeric.AD (AD, Mode)
 import qualified Numeric.AD (diff, lift)
 
--- | Unwrap a Dimensionals numeric representation.
+-- | Unwrap a Dimensional's numeric representation.
 undim :: Dimensional v d a -> a
 undim (Dimensional a) = a
 
