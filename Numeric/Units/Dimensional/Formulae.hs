@@ -76,8 +76,8 @@ wiensDisplacementLaw t = b / t where b = 2.8977721e-3 *~ (meter * kelvin)
                                -- Uncertainty:  26
 
 -- | Wien's displacement law in terms of frequency rather than wavelength.
-wiensDisplacementLaw' :: Floating a => ThermodynamicTemperature a -> Length a
-wiensDisplacementLaw' t = t * b' where b' = 5.8789254e10 (hertz / kelvin)
+wiensDisplacementLaw' :: Floating a => ThermodynamicTemperature a -> Frequency a
+wiensDisplacementLaw' t = t * b' where b' = 5.8789254e10 *~ (hertz / kelvin)
                                   -- Uncertainty:  53
 
 -- Planck's law TODO
