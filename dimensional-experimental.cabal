@@ -28,7 +28,7 @@ Build-Depends:
     numtype,
     HList >= 0.2.1,
     numeric-quest,
-    ad >= 0.44.4,
+    ad >= 1.5,
     ieee754 >= 0.7.3
 
 Exposed-Modules:
