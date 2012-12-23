@@ -7,7 +7,7 @@ module Numeric.Units.Dimensional.AD (diff, Lift (lift)) where
 
 import Numeric.Units.Dimensional (Dimensional (Dimensional), Quantity, Div)
 import Numeric.AD.Types (AD, Mode)
-import qualified Numeric.AD.Types (lift)
+import qualified Numeric.AD.Types (auto)
 import qualified Numeric.AD (diff)
 
 -- | Unwrap a Dimensional's numeric representation.
@@ -29,4 +29,4 @@ class Lift w where
   lift :: (Num a, Mode t) => w a -> w (t a)
 
 instance Lift (Dimensional v d)
-  where lift = Dimensional . Numeric.AD.Types.lift . undim
+  where lift = Dimensional . Numeric.AD.Types.auto . undim

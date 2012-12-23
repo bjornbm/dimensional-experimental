@@ -10,7 +10,7 @@ import Numeric.Units.Dimensional.LinearAlgebra.Vector (Vec (ListVec), MulD, DivD
 import Numeric.Units.Dimensional.LinearAlgebra.HListExtras (HZipWith)
 import Numeric.AD (diffF')
 import Numeric.AD.Types (AD, Mode)
-import qualified Numeric.AD.Types (lift)
+import qualified Numeric.AD.Types (auto)
 import Numeric.Units.Dimensional.AD
 
 
@@ -73,4 +73,4 @@ applyLinearAt f t (p,v) = diffV' (\t' -> f t' (lift p `elemAdd` scaleVec (t' - l
 -- -------
 
 -- | Lift the elements of a vector to 'AD.AD's.
-instance Lift (Vec ds) where lift (ListVec xs) = ListVec (map Numeric.AD.Types.lift xs)
+instance Lift (Vec ds) where lift (ListVec xs) = ListVec (map Numeric.AD.Types.auto xs)
