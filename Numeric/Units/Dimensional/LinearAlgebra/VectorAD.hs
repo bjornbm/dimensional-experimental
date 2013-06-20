@@ -54,7 +54,7 @@ applyLinear :: forall a t ds ds' ds2 ds2' ts. (
           ) => (forall tag. Mode tag => Vec ds (AD tag a) -> Vec ds2 (AD tag a)) -> (Vec ds a, Vec ds' a) -> (Vec ds2 a, Vec ds2' a)
 applyLinear f (p,v) = diffV' (\t -> f (lift p `elemAdd` scaleVec t (lift v))) t_0
   where
-    t_0  = Dimensional 0 :: Quantity t a
+    t_0  = _0 :: Quantity t a
 
 -- 'applyLinearAt is analogous to 'applyLinear' but should be used when
 -- the function is also dependent on the variable w r t which the vector

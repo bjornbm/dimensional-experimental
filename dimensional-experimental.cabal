@@ -2,7 +2,7 @@ Name:                dimensional-experimental
 Version:             0.5
 License:             BSD3
 License-File:        LICENSE
-Copyright:           Bjorn Buckwalter 2008-2011
+Copyright:           Bjorn Buckwalter 2008-2013
 Author:              Bjorn Buckwalter 
 Maintainer:          bjorn.buckwalter@gmail.com
 Stability:           experimental
@@ -24,7 +24,7 @@ Build-Depends:
     base,
     time,
     dimensional,
-    dimensional-vectors >= 0.9,
+    dimensional-vectors >= 0.12,
     numtype,
     HList >= 0.2.1,
     numeric-quest,
