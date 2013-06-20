@@ -1,5 +1,5 @@
 Name:                dimensional-experimental
-Version:             0.5
+Version:             0.5.1
 License:             BSD3
 License-File:        LICENSE
 Copyright:           Bjorn Buckwalter 2008-2013
@@ -23,8 +23,8 @@ Build-Depends:
 
     base,
     time,
-    dimensional,
-    dimensional-vectors >= 0.12,
+    dimensional >= 0.12,
+    dimensional-vectors >= 0.9,
     numtype,
     HList >= 0.2.1,
     numeric-quest,
