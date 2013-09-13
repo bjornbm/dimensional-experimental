@@ -57,7 +57,7 @@ Spherical coordinates.
 > polarAngle  :: Sph d a -> Zenith a
 > polarAngle  = zenith
 > latitude    :: Floating a => Sph d a -> Angle a
-> latitude s  = pi / _2 - colatitude s
+> latitude s  = tau / _4 - colatitude s
 > declination :: Floating a => Sph d a -> Angle a
 > declination = latitude
 
@@ -93,6 +93,11 @@ Converts a spherical position vector into a cartesian position vector.
 >     y = r * sin zen * sin az
 >     z = r * cos zen
 
+Convert declination/latitude to zenith.
+
+> toZenith :: Floating a => Angle a -> Zenith a
+> toZenith decl = tau / _4 - decl
+
 
 Position vectors
 ================
@@ -119,5 +124,3 @@ Conversions
 
 > s2cEphem :: RealFloat a => SPosVel a -> CPosVel a
 > s2cEphem = applyLinear s2c -- unlinearize (s2c . linearize s :: RealFloat b => Time b -> CPos b)
-
-
