@@ -1,8 +1,8 @@
 Name:                dimensional-experimental
-Version:             0.8.0.1
+Version:             0.8.1
 License:             BSD3
 License-File:        LICENSE
-Copyright:           Bjorn Buckwalter 2008-2013
+Copyright:           Bjorn Buckwalter 2008-2014
 Author:              Bjorn Buckwalter 
 Maintainer:          bjorn.buckwalter@gmail.com
 Stability:           experimental
@@ -28,7 +28,7 @@ Build-Depends:
     numtype,
     HList >= 0.2.1 && <0.3,
     numeric-quest,
-    ad >= 3.2,
+    ad >= 4.2 && < 4.3,
     ieee754 >= 0.7.3
 
 Exposed-Modules:
