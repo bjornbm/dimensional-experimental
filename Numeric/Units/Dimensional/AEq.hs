@@ -15,5 +15,5 @@ deriving instance AEq a => AEq (Quantity d a)
 
 instance (Floating a, AEq a) => AEq (Vec ds a)  -- CPos et al
   where
-    ListVec xs === ListVec ys = and $ zipWith (===) xs ys
+    -- ListVec xs === ListVec ys = and $ zipWith (===) xs ys
     ListVec xs ~== ListVec ys = and $ zipWith (~==) xs ys
