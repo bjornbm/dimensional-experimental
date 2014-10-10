@@ -29,7 +29,7 @@ Build-Depends:
     HList-classic >= 0.2.1 && <1.1,
     numeric-quest,
     ad >= 4.2 && < 4.3,
-    aeq
+    ieee754 >= 0.7.4
 
 Exposed-Modules:
 
