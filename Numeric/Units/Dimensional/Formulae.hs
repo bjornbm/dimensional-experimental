@@ -1,6 +1,9 @@
+{-# LANGUAGE DataKinds #-}
+
 module Numeric.Units.Dimensional.Formulae where
 
 import Numeric.Units.Dimensional.Prelude
+import Numeric.Units.Dimensional.UnitNames (atom)
 import Numeric.Units.Dimensional.Constants
 import qualified Prelude
 
@@ -53,9 +56,9 @@ activationEnergy' :: Floating a
 activationEnergy' (t1, k1) (t2, k2) = negate boltzmann * (log k2 - log k1) / (t2^neg1 - t1^neg1)
 
 -- | @http://en.wikipedia.org/wiki/Calorie@
-thermochemicalCalorie :: Fractional a => Unit DEnergy a
-thermochemicalCalorie = prefix 4.184 joule
-
+-- TODO dimensional-codata?
+thermochemicalCalorie :: Floating a => Unit 'NonMetric DEnergy a
+thermochemicalCalorie = mkUnitR (atom "cal" "cal" "cal") 4.184 joule
 
 -- Blackbody radiation
 -- -------------------

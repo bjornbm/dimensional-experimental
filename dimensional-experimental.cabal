@@ -23,13 +23,12 @@ Build-Depends:
 
     base,
     time,
-    dimensional >= 0.12,
-    dimensional-vectors >= 0.9,
-    numtype,
-    HList-classic >= 0.2.1 && <1.1,
+    dimensional,
+    dimensional-homo,
+    numtype-dk,
     numeric-quest,
-    ad >= 4.2 && < 4.3,
-    ieee754 >= 0.7.4
+    ad,
+    ieee
 
 Exposed-Modules:
 

@@ -1,13 +1,14 @@
-{-# OPTIONS_GHC -fglasgow-exts #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE Rank2Types #-}
+{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE TypeFamilies #-}
 
 module Numeric.Units.Dimensional.LinearAlgebra.VectorAD where
 
 import qualified Prelude
-import Data.HList (HMap)
 import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional (Dimensional (Dimensional))
-import Numeric.Units.Dimensional.LinearAlgebra.Vector (Vec (ListVec), MulD, DivD, Homo, elemAdd, scaleVec)
-import Numeric.Units.Dimensional.LinearAlgebra.HListExtras (HZipWith)
+import Numeric.Units.Dimensional.LinearAlgebra.Vector (Vec (ListVec), elemAdd, scaleVec)
 import Numeric.AD (auto, diffF')
 import Numeric.Units.Dimensional.AD
 
@@ -15,20 +16,19 @@ import Numeric.Units.Dimensional.AD
 -- | If @f@ is a function of a quantity that returns a 'Vector', then
 -- @diff f@ is a function of the same type of quantity that returns
 -- the first derivative of the result.
-diffV :: (Num a, HMap (DivD,d) ds ds')
-  => (forall tag. Quantity d (FAD tag a) -> Vec ds (FAD tag a)) -> Quantity d a -> Vec ds' a
+diffV :: Num a => (forall tag. Quantity d1 (FAD tag a) -> Vec d2 n (FAD tag a))
+      -> Quantity d1 a -> Vec ((/) d2 d1) n a
 diffV f = snd . diffV' f
 
 
 unfzip as = (fmap fst as, fmap snd as)
 
 -- | Like 'diffV' but returns a pair of the result and its first derivative.
-diffV' :: (Num a, HMap (DivD,d) ds ds')  -- Constraint could be changed to infer d instead (or also) if desired.
-  => (forall tag. Quantity d (FAD tag a) -> Vec ds (FAD tag a))
-  -> Quantity d a -> (Vec ds a, Vec ds' a)
-diffV' f (Dimensional x) = (ListVec ys, ListVec ys')
+diffV' :: Num a => (forall tag. Quantity d1 (FAD tag a) -> Vec d2 n (FAD tag a))
+       -> Quantity d1 a -> (Vec d2 n a, Vec ((/) d2 d1) n a)
+diffV' f x = (ListVec ys, ListVec ys')
   where
-    (ys,ys') = unfzip $ diffF' (unvec . f . Dimensional) x
+    (ys,ys') = unfzip $ diffF' (unvec . f . todim) (undim x)
     unvec (ListVec xs) = xs
 
 
@@ -39,36 +39,31 @@ diffV' f (Dimensional x) = (ListVec ys, ListVec ys')
 -- Linearizing
 -- -----------
 
--- @applyLinear@ converts a pair of a vector and its derivative w r t a
--- variable (e g time) into a function  linearized about the original vector
--- at @t=0@. Then the function (which should be independent of the variable,
--- but see 'applyLinearAt') is evaluated and the "new" vector/derivative
--- pair is reconstructed from the result.
-applyLinear :: forall a t ds ds' ds2 ds2' ts. (
-               Real a, Fractional a,
-               HMap (MulD,t) ds' ds,               -- Used in linearization.
-               HMap (DivD,t) ds2 ds2',             -- Used in differentiation.
-               HZipWith DivD ds ds' ts, Homo ts t  -- Necessary to infer t (the dimension w r t which we are differentiating).
-          ) => (forall tag. Vec ds (FAD tag a) -> Vec ds2 (FAD tag a)) -> (Vec ds a, Vec ds' a) -> (Vec ds2 a, Vec ds2' a)
-applyLinear f (p,v) = diffV' (\t -> f (lift p `elemAdd` scaleVec t (lift v))) t_0
-  where
-    t_0  = _0 :: Quantity t a
+-- TODO
+-- -- | @applyLinear@ converts a pair of a vector and its derivative w r t a
+-- --   variable (e g time) into a function  linearized about the original vector
+-- --   at @t=0@. Then the function (which should be independent of the variable,
+-- --   but see 'applyLinearAt') is evaluated and the "new" vector/derivative
+-- --   pair is reconstructed from the result.
+applyLinear :: forall d1 d1' d2 d2' n a t
+            . (d1 ~ (*) t d1', d2' ~ (/) d2 t, (/) d1 d1' ~ t, Num a)
+              --  HZipWith DivD ds ds' ts, Homo ts t  -- Necessary to infer t (the dimension w r t which we are differentiating).
+            => (forall tag b . b ~ FAD tag a => Vec d1 n b -> Vec d2 n b)
+            -> (Vec d1 n a, Vec d1' n a) -> (Vec d2 n a, Vec d2' n a)
+applyLinear f (v,v') = applyLinearAt (const f) (_0 :: Quantity t a) (v,v')
 
--- 'applyLinearAt is analogous to 'applyLinear' but should be used when
--- the function is also dependent on the variable w r t which the vector
--- is linearized.
-applyLinearAt :: forall a t ds ds' ds2 ds2' ts. (
-               Real a, Fractional a,
-               HMap (MulD,t) ds' ds,               -- Used in linearization.
-               HMap (DivD,t) ds2 ds2',             -- Used in differentiation.
-               HZipWith DivD ds ds' ts, Homo ts t  -- Necessary to infer t (the dimension w r t which we are differentiating).
-          ) => (forall tag. Quantity t (FAD tag a) -> Vec ds (FAD tag a) -> Vec ds2 (FAD tag a))
-            -> Quantity t a -> (Vec ds a, Vec ds' a) -> (Vec ds2 a, Vec ds2' a)
-applyLinearAt f t (p,v) = diffV' (\t' -> f t' (lift p `elemAdd` scaleVec (t' - lift t) (lift v))) t
+-- | 'applyLinearAt is analogous to 'applyLinear' but should be used when
+--   the function is also dependent on the variable w r t which the vector
+--   is linearized.
+applyLinearAt :: forall d1 d1' d2 d2' n a t
+              . (d1 ~ (*) t d1', d2' ~ (/) d2 t, Num a)
+              => (forall tag b . b ~ FAD tag a => Quantity t b -> Vec d1 n b -> Vec d2 n b)
+              -> Quantity t a -> (Vec d1 n a, Vec d1' n a) -> (Vec d2 n a, Vec d2' n a)
+applyLinearAt f t (v,v') = diffV' (\t' -> f t' (lift v `elemAdd` scaleVec (t' - lift t) (lift v'))) t
 
 
 -- Lifting
 -- -------
 
 -- | Lift the elements of a vector to 'AD.AD's.
-instance Lift (Vec ds) where lift (ListVec xs) = ListVec (map auto xs)
+instance Lift (Vec d n) where lift (ListVec xs) = ListVec (map auto xs)

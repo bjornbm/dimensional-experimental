@@ -1,7 +1,9 @@
+{-# LANGUAGE DataKinds #-}
+
 module Numeric.Units.Dimensional.Constants where
 
 import Numeric.Units.Dimensional.Prelude
-import Numeric.NumType (Neg4, Neg3, Neg2, Neg1, Zero, Pos1, Pos2, Pos3)
+import Numeric.NumType.DK.Integers (TypeInt (Neg4, Neg3, Neg2, Neg1, Zero, Pos1, Pos2, Pos3))
 import qualified Prelude
 
 -- Dim l m t i th n j
@@ -71,6 +73,7 @@ elementaryCharge = 1.602176565e-19 *~ coulomb
 -- Uncertainty:             35
 
 -- | Rydberg constant (R_inf).
+-- TODO dimensional-codata?
 rydberg :: Floating a => WaveNumber a
 rydberg = electronMass * elementaryCharge^pos4 / (_8 * permittivity^pos2 * planck^pos3 * speedOfLight)
 -- Using Double: 1.0973731593928682e7 m^-1
@@ -92,10 +95,11 @@ boltzmann = 1.3806488e-23 *~ (joule / kelvin)
 -- Uncertainty:    13
 
 -- | Molar gas constant (R = k * N_A).
+-- TODO dimensional-codata?
 molarGasConstant :: Fractional a => MolarEntropy a
 molarGasConstant = boltzmann * avogadro
 
 -- | Stefan-Boltzmann constant (sigma).
+-- TODO dimensional-codata?
 stefanBoltzmann :: Floating a => Quantity (Dim Zero Pos1 Neg3 Zero Neg4 Zero Zero) a
 stefanBoltzmann = _2 * pi ^ pos5 * boltzmann^pos4 / (15*~one) / planck^pos3 / speedOfLight ^pos2
-
