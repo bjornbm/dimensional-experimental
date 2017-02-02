@@ -121,28 +121,20 @@ type SPosVel a = (SPos a, SVel a)
 -- Conversions
 -- -----------
 
-c2sEphem :: forall a . RealFloat a => CPosVel a -> SPosVel a
+c2sEphem :: RealFloat a => CPosVel a -> SPosVel a
 c2sEphem = pvf . applyLinear (fp . c2s) -- unlinearize (c2s . linearize c :: RealFloat b => Time b -> SPos b)
   where
-    fp :: RealFloat c => SPos c -> Vec3 DOne c
     fp (Sph r zen az) = r / (1 *~ meter) <: zen <:. az
-    pvf :: (Vec3 DOne a, Vec3 DFrequency a) -> (SPos a, SVel a)
     pvf (p, v) = (pf p, vf v)
       where
-        pf :: RealFloat c => Vec3 DOne c -> SPos c
-        pf v = Sph (r * (1 *~ meter)) zen az where [r, zen, az] = toList v
-        vf :: RealFloat c => Vec3 DFrequency c -> SVel c
+        pf v = Sph  (r  * (1 *~ meter)) zen  az  where [r , zen , az ] = toList v
         vf v = SVel (r' * (1 *~ meter)) zen' az' where [r', zen', az'] = toList v
 
-s2cEphem :: forall a . RealFloat a => SPosVel a -> CPosVel a
+s2cEphem :: Floating a => SPosVel a -> CPosVel a
 s2cEphem = applyLinear (s2c . pf) . fpv -- unlinearize (s2c . linearize s :: RealFloat b => Time b -> CPos b)
   where
-    pf :: RealFloat c => Vec3 DOne c -> SPos c
     pf v = Sph (r * (1 *~ meter)) zen az where [r, zen, az] = toList v
-    fpv :: (SPos a, SVel a) -> (Vec3 DOne a, Vec3 DFrequency a)
     fpv (p,v) = (fp p, fv v)
       where
-        fp :: SPos a -> Vec3 DOne a
         fp (Sph r zen az) = r / (1 *~ meter) <: zen <:. az
-        fv :: SVel a -> Vec3 DFrequency a
         fv (SVel r' zen' az') = r' / (1 *~ meter) <: zen' <:. az'
