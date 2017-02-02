@@ -2,9 +2,12 @@
 -- The convention in this module is that a @C@ denotes cartesian coordinates and an @S@ denotes spherical coordinates.
 
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Numeric.Units.Dimensional.LinearAlgebra.PosVel where
 
@@ -27,11 +30,16 @@ type DRightAscension = DPlaneAngle; type RightAscension = Angle
 
 type Vec3 d = Vec d 3
 type Car d = Vec3 d  -- ^ Cartesian vector (x,y,z).
-data Sph d a = Sph (Quantity d a) (PlaneAngle a) (PlaneAngle a)  -- ^ Spherical coordinates.
 type CPos = Car DLength
 type CVel = Car DVelocity
+
+-- TODO is this general spherical coordinate useful or should I jusst specialize to Radius?
+data Sph d a = Sph (Quantity d a) (PlaneAngle a) (PlaneAngle a)  -- ^ Spherical coordinates.
+  deriving (Eq)
+deriving instance (KnownDimension d, Show a, Fractional a) => Show (Sph d a)  -- Needed since d unknown.
 type SPos = Sph DRadius
 data SVel a = SVel (Velocity a) (AngularVelocity a) (AngularVelocity a)
+  deriving (Eq, Show)
 
 
 
