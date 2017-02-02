@@ -1,9 +1,9 @@
 
 -- The convention in this module is that a @C@ denotes cartesian coordinates and an @S@ denotes spherical coordinates.
 
-{-# OPTIONS_GHC -fglasgow-exts #-}
-{-# LANGUAGE Haskell98 #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Numeric.Units.Dimensional.LinearAlgebra.PosVel where
