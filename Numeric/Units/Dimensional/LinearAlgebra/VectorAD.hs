@@ -55,8 +55,7 @@ applyLinear f (v,v') = applyLinearAt (const f) (_0 :: Quantity t a) (v,v')
 -- | 'applyLinearAt is analogous to 'applyLinear' but should be used when
 --   the function is also dependent on the variable w r t which the vector
 --   is linearized.
-applyLinearAt :: forall d1 d1' d2 d2' n a t
-              . (d1 ~ (*) t d1', d2' ~ (/) d2 t, Num a)
+applyLinearAt :: (d1 ~ (*) t d1', d2' ~ (/) d2 t, Num a)
               => (forall tag b . b ~ FAD tag a => Quantity t b -> Vec d1 n b -> Vec d2 n b)
               -> Quantity t a -> (Vec d1 n a, Vec d1' n a) -> (Vec d2 n a, Vec d2' n a)
 applyLinearAt f t (v,v') = diffV' (\t' -> f t' (lift v `elemAdd` scaleVec (t' - lift t) (lift v'))) t
