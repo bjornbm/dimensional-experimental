@@ -34,8 +34,11 @@ type CPos = Car DLength
 type CVel = Car DVelocity
 
 -- TODO is this general spherical coordinate useful or should I jusst specialize to Radius?
-data Sph d a = Sph (Quantity d a) (PlaneAngle a) (PlaneAngle a)  -- ^ Spherical coordinates.
-  deriving (Eq)
+-- ^ Spherical coordinates.
+data Sph d a = Sph { magnitude      :: Quantity d a
+                   , zenith         :: PlaneAngle a
+                   , rightAscension :: PlaneAngle a
+                   } deriving (Eq)
 deriving instance (KnownDimension d, Show a, Fractional a) => Show (Sph d a)  -- Needed since d unknown.
 type SPos = Sph DRadius
 data SVel a = SVel (Velocity a) (AngularVelocity a) (AngularVelocity a)
@@ -56,12 +59,6 @@ z :: Car d a -> Quantity d a
 z = vElemAt n2
 
 -- Spherical coordinates.
-
-magnitude :: Sph d a -> Quantity d a
-magnitude (Sph r _ _)= r
-
-zenith :: Sph d a -> Zenith a
-zenith (Sph _ z _)= z
 colatitude  :: Sph d a -> Zenith a
 colatitude  = zenith
 polarAngle  :: Sph d a -> Zenith a
@@ -70,13 +67,10 @@ latitude    :: Floating a => Sph d a -> Angle a
 latitude s  = tau / _4 - colatitude s
 declination :: Floating a => Sph d a -> Angle a
 declination = latitude
-
-rightAscension :: Sph d a -> RightAscension a
-rightAscension (Sph _ _ ra)= ra
-longitude      :: Sph d a -> RightAscension a
-longitude      = rightAscension
-hourAngle      :: Sph d a -> RightAscension a
-hourAngle      = rightAscension
+longitude :: Sph d a -> RightAscension a
+longitude = rightAscension
+hourAngle :: Sph d a -> RightAscension a
+hourAngle = rightAscension
 
 
 -- Converting
@@ -95,7 +89,7 @@ c2s c = Sph r zen az
 -- Converts a spherical position vector into a cartesian position vector.
 
 s2c :: Floating a => Sph d a -> Car d a
-s2c s = fromTuple (x, y, z)
+s2c s = x <: y <:. z
   where
     Sph r zen az = s
     x = r * sin zen * cos az
