@@ -28,7 +28,7 @@ Build-Depends:
     numtype-dk,
     numeric-quest,
     ad,
-    ieee
+    ieee754
 
 Exposed-Modules:
 
