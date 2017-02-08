@@ -81,7 +81,7 @@ c2s :: RealFloat a => Car d a -> Sph d a
 c2s c = Sph r zen az
   where
     (x, y, z) = toTuple c
-    r   = vNorm c  -- sqrt (x^pos2 + y^pos2 + z^pos2)
+    r   = norm c  -- sqrt (x^pos2 + y^pos2 + z^pos2)
     zen = if r == _0 then _0 else acos (z / r)
     az  = atan2 y x
 
@@ -129,13 +129,13 @@ c2sEphem = pvf . applyLinear (fp . c2s) -- unlinearize (c2s . linearize c :: Rea
     fp (Sph r zen az) = r / (1 *~ meter) <: zen <:. az
     pvf (p, v) = (pf p, vf v)
       where
-        pf v = Sph  (r  * (1 *~ meter)) zen  az  where [r , zen , az ] = toList v
-        vf v = SVel (r' * (1 *~ meter)) zen' az' where [r', zen', az'] = toList v
+        pf v = Sph  (r  * (1 *~ meter)) zen  az  where [r , zen , az ] = listElems v
+        vf v = SVel (r' * (1 *~ meter)) zen' az' where [r', zen', az'] = listElems v
 
 s2cEphem :: Floating a => SPosVel a -> CPosVel a
 s2cEphem = applyLinear (s2c . pf) . fpv -- unlinearize (s2c . linearize s :: RealFloat b => Time b -> CPos b)
   where
-    pf v = Sph (r * (1 *~ meter)) zen az where [r, zen, az] = toList v
+    pf v = Sph (r * (1 *~ meter)) zen az where [r, zen, az] = listElems v
     fpv (p,v) = (fp p, fv v)
       where
         fp (Sph r zen az) = r / (1 *~ meter) <: zen <:. az
