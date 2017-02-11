@@ -24,6 +24,7 @@ Build-Depends:
     base,
     time,
     dimensional,
+    dimensional-dk-experimental,
     dimensional-homo,
     numtype-dk,
     numeric-quest,
