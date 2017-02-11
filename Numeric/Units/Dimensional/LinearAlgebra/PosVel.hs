@@ -39,7 +39,7 @@ data Sph d a = Sph { magnitude      :: Quantity d a
                    , zenith         :: PlaneAngle a
                    , rightAscension :: PlaneAngle a
                    } deriving (Eq)
-deriving instance (KnownDimension d, Show a, Fractional a) => Show (Sph d a)  -- Needed since d unknown.
+deriving instance (KnownDimension d, Show a, Real a) => Show (Sph d a)  -- Needed since d unknown.
 type SPos = Sph DRadius
 data SVel a = SVel (Velocity a) (AngularVelocity a) (AngularVelocity a)
   deriving (Eq, Show)
