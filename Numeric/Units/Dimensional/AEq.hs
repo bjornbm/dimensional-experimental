@@ -8,7 +8,6 @@ import Numeric.Units.Dimensional (Dimensional (Dimensional), Quantity)
 import Numeric.Units.Dimensional.Coercion
 import Numeric.Units.Dimensional.LinearAlgebra.Vector (Vec (ListVec))
 import Numeric.Units.Dimensional.LinearAlgebra.Matrix (Mat (ListMat))
-import Numeric.Units.Dimensional.DK.AEq
 import Data.AEq
 
 
