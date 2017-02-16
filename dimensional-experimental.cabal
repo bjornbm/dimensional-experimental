@@ -28,13 +28,11 @@ Build-Depends:
     dimensional-homo,
     numtype-dk,
     numeric-quest,
-    ad,
-    ieee754
+    ad
 
 Exposed-Modules:
 
     Numeric.Units.Dimensional.AD
-    Numeric.Units.Dimensional.AEq
     Numeric.Units.Dimensional.Constants
     Numeric.Units.Dimensional.Formulae
     Numeric.Units.Dimensional.LinearAlgebra.VectorAD
