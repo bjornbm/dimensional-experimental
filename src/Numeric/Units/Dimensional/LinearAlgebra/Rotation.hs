@@ -7,6 +7,15 @@ import Numeric.Units.Dimensional.Prelude
 import Numeric.Units.Dimensional.LinearAlgebra
 import qualified Prelude
 
+-- $setup
+-- >>> :set -XTypeSynonymInstances
+-- >>> :set -XFlexibleInstances
+-- >>> :set -XFlexibleContexts
+-- >>> :set -XDataKinds
+-- >>> import Data.AEq
+-- >>> import Test.QuickCheck
+-- >>> instance (HasDimension (Data.Proxy.Proxy d), Arbitrary a, Num a) => Arbitrary (Quantity d a) where arbitrary = (*~ siUnit) <$> arbitrary
+
 -- | The type of homogenous vectors with three elements.
 type Homo3 d = Vec d 3
 
@@ -26,16 +35,22 @@ type Homo33 d = Mat d 3 3
 -- Rotation matrices. Rotates a vector by the given angle (analogous
 -- to rotating the coordinate system in opposite direction).
 
+-- |
+-- prop> rotX a ~== rotV unit_x (a :: Angle Double)
 rotX :: Floating a => PlaneAngle a -> Homo33 DOne a
 rotX a =   (_1 <:    _0 <:.            _0 )
        |:  (_0 <: cos a <:. negate (sin a))
        |:. (_0 <: sin a <:.         cos a )
 
+-- |
+-- prop> rotY a ~== rotV unit_y (a :: Angle Double)
 rotY :: Floating a => PlaneAngle a -> Homo33 DOne a
 rotY a =   (        cos a  <: _0 <:. sin a)
        |:  (           _0  <: _1 <:.    _0)
        |:. (negate (sin a) <: _0 <:. cos a)
 
+-- |
+-- prop> rotZ a ~== rotV unit_z (a :: Angle Double)
 rotZ :: Floating a => PlaneAngle a -> Homo33 DOne a
 rotZ a =   (cos a <: negate (sin a) <:. _0)
        |:  (sin a <:         cos a  <:. _0)

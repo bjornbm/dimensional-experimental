@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: lts-13.19
+resolver: lts-17.9
 allow-newer: true
 
 # User packages to be built.
@@ -38,15 +38,13 @@ allow-newer: true
 # will not be run. This is useful for tweaking upstream packages.
 packages:
 - '.'
-- '../dimensional'
-- '../dimensional-dk-experimental'
 - '../dimensional-homo'
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps:
 - numeric-quest-0.2.0.2
-- HaTeX-3.20.0.0
-- wl-pprint-extras-3.5.0.5
+- git: https://github.com/bjornbm/dimensional-dk-experimental.git
+  commit: 0516f3f10f2589b414a8ede6b949e44dbc1ceebc  # origin/dimensional-head
 
 # Override default flag values for local packages and extra-deps
 flags: {}
